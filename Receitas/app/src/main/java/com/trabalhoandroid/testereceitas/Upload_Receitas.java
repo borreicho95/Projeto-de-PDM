@@ -41,11 +41,12 @@ public class Upload_Receitas extends AppCompatActivity {
 
         receitaImagem = (ImageView)findViewById(R.id.idReceitaImagem);
         txt_nome = (EditText)findViewById(R.id.txtNomeReceita);
-        txt_ingredientes = (EditText)findViewById(R.id.txtIngredientes);
+        txt_ingredientes = (EditText)findViewById(R.id.txtIngredientes2);
         txt_descricao = (EditText)findViewById(R.id.txtDescricao2);
 
     }
 
+    //Adiciona a imagem ao ImageView
     public void btnAdicionarImagem(View view) {
 
         Intent photoPicker = new Intent(Intent.ACTION_PICK);
@@ -67,7 +68,8 @@ public class Upload_Receitas extends AppCompatActivity {
 
     }
 
-    public void uploadImage(){
+    //Função de upload da imagem para o firebase
+    public void uploadImagem(){
 
         StorageReference storageReference = FirebaseStorage.getInstance()
                 .getReference().child("ReceitaImagem").child(uri.getLastPathSegment());
@@ -84,7 +86,8 @@ public class Upload_Receitas extends AppCompatActivity {
                 while(!uriTask.isComplete());
                 Uri urlImagem = uriTask.getResult();
                 imagemUrl = urlImagem.toString();
-                uploadRecipe();
+                //Chamar a funçao que envia a receita para o firebase
+                uploadReceita();
                 progressDialog.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -98,17 +101,19 @@ public class Upload_Receitas extends AppCompatActivity {
 
     }
 
-
+    //Chama a função acima que envia a imagem e envia também a receita
     public void btnUploadReceita(View view) {
 
-        uploadImage();
+        uploadImagem();
 
     }
 
-    public void uploadRecipe(){
+
+    //Função para que seja possível fazer o upload da receita
+    public void uploadReceita(){
 
 
-
+        //Guardar informações no Array
         DadosReceita dadosReceita = new DadosReceita(
                 txt_nome.getText().toString(),
                 txt_ingredientes.getText().toString(),
@@ -116,6 +121,7 @@ public class Upload_Receitas extends AppCompatActivity {
                 imagemUrl
         );
 
+        //Usar a data para guardar as informações no firebase
         String myCurrentDateTime = DateFormat.getDateTimeInstance()
                 .format(Calendar.getInstance().getTime());
 

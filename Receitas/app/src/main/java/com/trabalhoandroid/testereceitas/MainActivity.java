@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
     List<DadosReceita> mReceitasList;
-    DadosReceita mDadosReceitas;
 
     private DatabaseReference databaseReference;
     private ValueEventListener eventListener;
@@ -34,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Isto serve para gerir as informações e colocá-las numa grid
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 1);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
+        //Isto é o que faz aparecer aquela pequena janela com a rodinha de carregar
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("A carregar receitas...");
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Isto é só para abrir a próxima activity
     public void btnUploadReceita(View view) {
         startActivity(new Intent(this, Upload_Receitas.class));
     }

@@ -1,23 +1,26 @@
 package com.trabalhoandroid.testereceitas;
 
+//Criação da classe que vai conter as informações
 public class DadosReceita {
 
     private String itemNome;
     private String itemIngredientes;
     private String itemDescricao;
-    private String itemImage;
+    private String itemImagem;
 
     public DadosReceita() {
 
     }
 
-    public DadosReceita(String itemNome, String itemIngredientes, String itemDescricao, String itemImage) {
+    //Este é um simples construtor
+    public DadosReceita(String itemNome, String itemIngredientes, String itemDescricao, String itemImagem) {
         this.itemNome = itemNome;
         this.itemIngredientes = itemIngredientes;
         this.itemDescricao = itemDescricao;
-        this.itemImage = itemImage;
+        this.itemImagem = itemImagem;
     }
 
+    //Estes são getters
     public String getItemNome() {
         return itemNome;
     }
@@ -30,7 +33,7 @@ public class DadosReceita {
         return itemDescricao;
     }
 
-    public String getItemImage() {
-        return itemImage;
+    public String getItemImagem() {
+        return itemImagem;
     }
 }

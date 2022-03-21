@@ -37,7 +37,7 @@ public class mAdapter extends RecyclerView.Adapter<ReceitasViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ReceitasViewHolder receitasViewHolder, int i) {
 
-        Glide.with(mContext).load(mReceitasList.get(i).getItemImage()).into(receitasViewHolder.imageView);
+        Glide.with(mContext).load(mReceitasList.get(i).getItemImagem()).into(receitasViewHolder.imageView);
 
         receitasViewHolder.mTitulo.setText(mReceitasList.get(i).getItemNome());
         receitasViewHolder.mIngredientes.setText(mReceitasList.get(i).getItemIngredientes());
@@ -47,7 +47,7 @@ public class mAdapter extends RecyclerView.Adapter<ReceitasViewHolder>{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext,DetalhesActivity.class);
-                intent.putExtra("Imagem",mReceitasList.get(receitasViewHolder.getAdapterPosition()).getItemImage());
+                intent.putExtra("Imagem",mReceitasList.get(receitasViewHolder.getAdapterPosition()).getItemImagem());
                 intent.putExtra("Ingredientes",mReceitasList.get(receitasViewHolder.getAdapterPosition()).getItemIngredientes());
                 intent.putExtra("Descricao",mReceitasList.get(receitasViewHolder.getAdapterPosition()).getItemDescricao());
                 mContext.startActivity(intent);
