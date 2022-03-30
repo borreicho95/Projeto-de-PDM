@@ -7,6 +7,7 @@ public class DadosReceita {
     private String itemIngredientes;
     private String itemDescricao;
     private String itemImagem;
+    private String key;
 
     public DadosReceita() {
 
@@ -36,4 +37,14 @@ public class DadosReceita {
     public String getItemImagem() {
         return itemImagem;
     }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+
 }

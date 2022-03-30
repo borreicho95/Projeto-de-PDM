@@ -1,5 +1,9 @@
 package com.trabalhoandroid.testereceitas;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,11 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,31 +26,51 @@ import com.google.firebase.storage.StorageReference;
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class Upload_Receitas extends AppCompatActivity {
+public class EditarReceita extends AppCompatActivity {
 
     ImageView receitaImagem;
     Uri uri;
     EditText txt_nome,txt_ingredientes,txt_descricao;
     String imagemUrl;
+    String key, imagemUrlAntiga;
     DatabaseReference databaseReference;
+    StorageReference storageReference;
+    String receitaDescricao, receitaIngredientes, receitaNome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_receitas);
+        setContentView(R.layout.activity_editar_receita);
 
         receitaImagem = (ImageView)findViewById(R.id.idReceitaImagem);
         txt_nome = (EditText)findViewById(R.id.txtNomeReceita);
         txt_ingredientes = (EditText)findViewById(R.id.txtIngredientes2);
         txt_descricao = (EditText)findViewById(R.id.txtDescricao2);
 
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+
+            Glide.with(getApplicationContext()).load(bundle.getString("imagemUrlAntiga")).into(receitaImagem);
+
+            txt_nome.setText(bundle.getString("TituloKey"));
+            txt_ingredientes.setText(bundle.getString("IngredientesKey"));
+            txt_descricao.setText(bundle.getString("DescricaoKey"));
+            key = bundle.getString("key");
+            imagemUrlAntiga = bundle.getString("imagemUrlAntiga");
+
+        }
+
+        databaseReference = FirebaseDatabase.getInstance("https://receitas-bb125-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Receitas").child(key);
+
+
     }
 
-    //Adiciona a imagem ao ImageView
     public void btnAdicionarImagem(View view) {
 
         Intent photoPicker = new Intent(Intent.ACTION_PICK);
         photoPicker.setType("image/*");
         startActivityForResult(photoPicker,1);
+
     }
 
     @Override
@@ -59,19 +83,21 @@ public class Upload_Receitas extends AppCompatActivity {
             receitaImagem.setImageURI(uri);
 
         }
-        else Toast.makeText(this, "Imagem nao selecionada", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getApplicationContext(), "Imagem nao selecionada", Toast.LENGTH_SHORT).show();
 
     }
 
-    //Função de upload da imagem para o firebase
-    public void uploadImagem(){
+    public void btnAtualizarReceita(View view) {
 
-        StorageReference storageReference = FirebaseStorage.getInstance()
-                .getReference().child("ReceitaImagem").child(uri.getLastPathSegment());
+        receitaNome = txt_nome.getText().toString().trim();
+        receitaIngredientes = txt_ingredientes.getText().toString().trim();
+        receitaDescricao = txt_descricao.getText().toString().trim();
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Receita Uplading....");
         progressDialog.show();
+
+        storageReference = FirebaseStorage.getInstance().getReference().child("ReceitaImagem").child(uri.getLastPathSegment());
 
         storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
 
@@ -84,58 +110,28 @@ public class Upload_Receitas extends AppCompatActivity {
             progressDialog.dismiss();
         }).addOnFailureListener(e -> progressDialog.dismiss());
 
-
-
     }
 
-    //Chama a função acima que envia a imagem e envia também a receita
-    public void btnUploadReceita(View view) {
-
-        uploadImagem();
-
-    }
-
-
-    //Função para que seja possível fazer o upload da receita
     public void uploadReceita(){
 
 
         //Guardar informações no Array
         DadosReceita dadosReceita = new DadosReceita(
-                txt_nome.getText().toString(),
-                txt_ingredientes.getText().toString(),
-                txt_descricao.getText().toString(),
+                receitaNome,
+                receitaIngredientes,
+                receitaDescricao,
                 imagemUrl
+
         );
 
-        //Usar a data para guardar as informações no firebase
-        String myCurrentDateTime = DateFormat.getDateTimeInstance()
-                .format(Calendar.getInstance().getTime());
-
-        databaseReference = FirebaseDatabase.getInstance("https://receitas-bb125-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Receitas");
-
-        try {
-            databaseReference.child(myCurrentDateTime).setValue(dadosReceita).addOnCompleteListener(task -> {
-
-                if(task.isSuccessful()){
-
-                    Toast.makeText(getApplicationContext(), "Receita Uploaded", Toast.LENGTH_SHORT).show();
-                    finish();
-
-                }
-
-
-
-            }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show());
-        }catch (Exception exception){
-            Log.d("kebab", exception.getMessage());
-        }
-
-
-
-
+        databaseReference.setValue(dadosReceita).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                StorageReference storageReferenceNew = FirebaseStorage.getInstance().getReferenceFromUrl(imagemUrlAntiga);
+                storageReferenceNew.delete();
+                Toast.makeText(getApplicationContext(), "Dados Atualizados", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
-
-
 }
