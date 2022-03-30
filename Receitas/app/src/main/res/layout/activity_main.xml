@@ -25,15 +25,31 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="40dp"
+        android:layout_marginRight="40dp"
         android:backgroundTint="@color/purple_500"
-        android:src="@drawable/upload_imagem"
-        android:onClick="btnUploadReceita"/>
+        android:text="Logout"
+        android:onClick="btnLogout"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:text="Upload"
+        android:onClick="btnUploadReceita"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="160dp"
+        android:text="Profile"
+        android:onClick="btnPerfil"
+        android:layout_alignParentBottom="true"/>
 
 
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -118,6 +119,15 @@ public class MainActivity extends AppCompatActivity {
 
     //Isto é só para abrir a próxima activity
     public void btnUploadReceita(View view) {
-        startActivity(new Intent(this, Upload_Receitas.class));
+        startActivity(new Intent(getApplicationContext(), Upload_Receitas.class));
+    }
+
+    public void btnLogout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), Login.class));
+    }
+
+    public void btnPerfil(View view) {
+        startActivity(new Intent(getApplicationContext(), Profile.class));
     }
 }
