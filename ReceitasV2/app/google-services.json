@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "539251117511",
+    "firebase_url": "https://receitas-bb125-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "receitas-bb125",
+    "storage_bucket": "receitas-bb125.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539251117511:android:4a82165cd1bbf9eb2a9de2",
+        "android_client_info": {
+          "package_name": "com.trabalhoandroid.receitasv2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539251117511-69lmnv2gh1p60hqrnhbdke8ujmggllo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2gXN7_oqRVFXhBjbIbM_lonvFRJD5aWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539251117511-69lmnv2gh1p60hqrnhbdke8ujmggllo5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539251117511:android:1c8f1cfde207a4712a9de2",
+        "android_client_info": {
+          "package_name": "com.trabalhoandroid.testereceitas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539251117511-69lmnv2gh1p60hqrnhbdke8ujmggllo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2gXN7_oqRVFXhBjbIbM_lonvFRJD5aWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539251117511-69lmnv2gh1p60hqrnhbdke8ujmggllo5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
